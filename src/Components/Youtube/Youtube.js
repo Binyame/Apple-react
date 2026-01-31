@@ -16,13 +16,17 @@ class Youtube extends Component {
 		fetch("https://www.googleapis.com/youtube/v3/search?key=AIzaSyB4xNW_TeLDTO9tKxmHQAZskoy9Na0sxR0&channelId=UCE_M8A5yxnLfW0KghEeajjw&part=snippet,id&order=date&maxResults=6")
 			.then(response => response.json())
 			.then((data) => {
-				const youTubeVideos = data.items;
+				const youTubeVideos = data.items || [];
 				this.setState((state) => {
 			        return {
 			          youTubeVideos: youTubeVideos,
 			        };
 			      }
 				);
+			})
+			.catch((error) => {
+				console.error('YouTube API Error:', error);
+				this.setState({ youTubeVideos: [] });
 			})
 	}
 	
